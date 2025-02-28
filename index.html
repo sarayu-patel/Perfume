@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Luxury Perfumes | Scents Collection</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <div class="announcement-bar">
+            <p>Up to 80% Off Testers | Free Shipping On US Orders</p>
+        </div>
+        
+        <nav class="main-nav">
+            <div class="logo">
+                <h1>Scents Collection</h1>
+            </div>
+            <div class="nav-links">
+                <a href="#fragrance-categories" class="active">HOME</a>
+                <a href="#blog">BLOG</a>
+                <a href="#contact">CONTACT</a>
+                <a href="#about">ABOUT</a>
+            </div>
+            <div class="nav-actions">
+                <button class="search-btn"><i class="fas fa-search"></i></button>
+                <button class="cart-btn" onclick="openCart()">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-count">0</span>
+                </button>
+                <button class="auth-btn" onclick="openLoginModal()">Sign In</button>
+                <button class="menu-btn"><i class="fas fa-bars"></i></button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Login Modal -->
+    <div class="modal" id="loginModal">
+        <div class="modal-content">
+            <span class="close" onclick="closeLoginModal()">&times;</span>
+            <h2>Login</h2>
+            <form id="loginForm" onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label for="loginEmail">Email</label>
+                    <input type="email" id="loginEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">Password</label>
+                    <input type="password" id="loginPassword" required>
+                </div>
+                <button type="submit" class="submit-btn">Login</button>
+            </form>
+            <div class="switch-form">
+                <p>Don't have an account? <a href="#" onclick="switchToSignup()">Sign Up</a></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Signup Modal -->
+    <div class="modal" id="signupModal">
+        <div class="modal-content">
+            <span class="close" onclick="closeSignupModal()">&times;</span>
+            <h2>Sign Up</h2>
+            <div id="signupError" class="error-message"></div>
+            <form id="signupForm">
+                <div class="form-group">
+                    <label for="signupName">Name</label>
+                    <input type="text" id="signupName" required>
+                </div>
+                <div class="form-group">
+                    <label for="signupEmail">Email</label>
+                    <input type="email" id="signupEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="signupPassword">Password</label>
+                    <input type="password" id="signupPassword" required>
+                </div>
+                <div class="form-group">
+                    <label for="confirmPassword">Confirm Password</label>
+                    <input type="password" id="confirmPassword" required>
+                </div>
+                <button type="submit" class="submit-btn">Sign Up</button>
+            </form>
+            <div class="switch-form">
+                <p>Already have an account? <a href="#" onclick="switchToLogin()">Login</a></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-slider">
+            <div class="slide active" style="background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('./image copy 13.png')"></div>
+            <div class="slide" style="background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('./image copy 10.png')"></div>
+            <div class="slide" style="background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('./image copy 14.png')"></div>
+            <div class="slide" style="background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('./image copy 11.png')"></div>
+            <div class="slide" style="background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('./image copy 5.png')"></div>
+            
+            <button class="slider-btn prev" onclick="changeSlide(-1)">❮</button>
+            <button class="slider-btn next" onclick="changeSlide(1)">❯</button>
+            
+            <div class="slider-dots">
+                <span class="dot active" onclick="goToSlide(0)"></span>
+                <span class="dot" onclick="goToSlide(1)"></span>
+                <span class="dot" onclick="goToSlide(2)"></span>
+                <span class="dot" onclick="goToSlide(3)"></span>
+                <span class="dot" onclick="goToSlide(4)"></span>
+            </div>
+        </div>
+        
+        <div class="hero-content">
+            <h1>Luxury Fragrances</h1>
+            <p>Discover Your Perfect Scent</p>
+            <button class="shop-now" onclick="document.querySelector('#fragrance-categories').scrollIntoView({behavior: 'smooth'})">
+                Explore Collection
+            </button>
+        </div>
+    </section>
+
+    <!-- Featured Products Section -->
+    <section class="featured-products">
+        <h2>Featured Products</h2>
+        <div class="product-grid">
+            <div class="product-card">
+                <div class="product-badge">New</div>
+                <img src="./image copy 13.png" alt="Luxury Perfume">
+                <div class="product-info">
+                    <h3>Baccarat Rouge 540</h3>
+                    <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half"></i>
+                        <span>(124)</span>
+                    </div>
+                    <p class="price">$299.99</p>
+                    <button class="add-to-cart" onclick="addToCart('Baccarat Rouge 540', 299.99)">
+                        Add to Cart
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Best Sellers Section -->
+    <section class="best-sellers">
+        <h2>Best Sellers</h2>
+        <div class="product-grid">
+            <div class="product-card">
+                <img src="./image copy 5.png" alt="Side Effect">
+                <h3>Side Effect</h3>
+                <p class="price">$24.61</p>
+                <button class="add-to-cart" onclick="addToCart('Side Effect', 24.61)">Add to Cart</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Categories Section -->
+    <section id="fragrance-categories" class="fragrance-categories">
+        <h2>Explore Our Collections</h2>
+        <div class="category-grid">
+            <div class="category-card women">
+                <div class="category-overlay">
+                    <h3>Women's Fragrances</h3>
+                    <p>Discover floral, fruity, and oriental scents</p>
+                    <a href="#women" class="category-btn">Explore</a>
+                </div>
+            </div>
+            <div class="category-card men">
+                <div class="category-overlay">
+                    <h3>Men's Fragrances</h3>
+                    <p>Experience woody, spicy, and fresh aromas</p>
+                    <a href="#men" class="category-btn">Explore</a>
+                </div>
+            </div>
+            <div class="category-card unisex">
+                <div class="category-overlay">
+                    <h3>Unisex Fragrances</h3>
+                    <p>Embrace gender-neutral luxury scents</p>
+                    <a href="#unisex" class="category-btn">Explore</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter Section -->
+    <section class="newsletter">
+        <div class="newsletter-content">
+            <h2>Join Our VIP List</h2>
+            <p>Subscribe to get special offers, free giveaways, and exclusive deals.</p>
+            <form class="newsletter-form">
+                <input type="email" placeholder="Enter your email">
+                <button type="submit">Subscribe</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Women's Collection Section -->
+    <section id="women" class="category-display women-collection">
+        <div class="category-header">
+            <h2>Women's Collection</h2>
+            <button class="back-btn" onclick="window.location.href='#'">
+                <i class="fas fa-arrow-left"></i> Back to Home
+            </button>
+        </div>
+        <div class="product-grid">
+            <div class="product-card">
+                <div class="product-badge">New</div>
+                <img src="./image copy 13.png" alt="Baccarat Rouge 540">
+                <div class="product-info">
+                    <h3>Baccarat Rouge 540</h3>
+                    <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half"></i>
+                        <span>(124)</span>
+                    </div>
+                    <p class="price">$299.99</p>
+                    <button class="add-to-cart" onclick="addToCart('Baccarat Rouge 540', 299.99)">Add to Cart</button>
+                </div>
+            </div>
+            <div class="product-card">
+                <img src="./image copy 17.png" alt="Chanel No. 5">
+                <div class="product-info">
+                    <h3>Chanel No. 5</h3>
+                    <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <span>(208)</span>
+                    </div>
+                    <p class="price">$135.00</p>
+                    <button class="add-to-cart" onclick="addToCart('Chanel No. 5', 135.00)">Add to Cart</button>
+                </div>
+            </div>
+            <div class="product-card">
+                <img src="./image copy 14.png" alt="Miss Dior">
+                <div class="product-info">
+                    <h3>Miss Dior</h3>
+                    <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <span>(156)</span>
+                    </div>
+                    <p class="price">$120.00</p>
+                    <button class="add-to-cart" onclick="addToCart('Miss Dior', 120.00)">Add to Cart</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Men's Collection Section -->
+    <section id="men" class="category-display men-collection">
+        <div class="category-header">
+            <h2>Men's Collection</h2>
+            <button class="back-btn" onclick="window.location.href='#'">
+                <i class="fas fa-arrow-left"></i> Back to Home
+            </button>
+        </div>
+        <div class="product-grid">
+            <div class="product-card">
+                <img src="./image copy 10.png" alt="Bleu de Chanel">
+                <div class="product-info">
+                    <h3>Bleu de Chanel</h3>
+                    <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <span>(189)</span>
+                    </div>
+                    <p class="price">$145.00</p>
+                    <button class="add-to-cart" onclick="addToCart('Bleu de Chanel', 145.00)">Add to Cart</button>
+                </div>
+            </div>
+            <div class="product-card">
+                <img src="./image copy 8.png" alt="Dior Sauvage">
+                <div class="product-info">
+                    <h3>Dior Sauvage</h3>
+                    <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half"></i>
+                        <span>(167)</span>
+                    </div>
+                    <p class="price">$155.00</p>
+                    <button class="add-to-cart" onclick="addToCart('Dior Sauvage', 155.00)">Add to Cart</button>
+                </div>
+            </div>
+            <div class="product-card">
+                <img src="./image copy 7.png" alt="Acqua di Gio">
+                <div class="product-info">
+                    <h3>Acqua di Gio</h3>
+                    <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <span>(145)</span>
+                    </div>
+                    <p class="price">$128.00</p>
+                    <button class="add-to-cart" onclick="addToCart('Acqua di Gio', 128.00)">Add to Cart</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Unisex Collection Section -->
+    <section id="unisex" class="category-display unisex-collection">
+        <div class="category-header">
+            <h2>Unisex Collection</h2>
+            <button class="back-btn" onclick="window.location.href='#'">
+                <i class="fas fa-arrow-left"></i> Back to Home
+            </button>
+        </div>
+        <div class="product-grid">
+            <div class="product-card">
+                <img src="./image copy 11.png" alt="Le Labo Santal 33">
+                <div class="product-info">
+                    <h3>Le Labo Santal 33</h3>
+                    <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <span>(178)</span>
+                    </div>
+                    <p class="price">$192.00</p>
+                    <button class="add-to-cart" onclick="addToCart('Le Labo Santal 33', 192.00)">Add to Cart</button>
+                </div>
+            </div>
+            <div class="product-card">
+                <img src="./image copy 5.png" alt="Side Effect">
+                <div class="product-info">
+                    <h3>Side Effect</h3>
+                    <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <span>(134)</span>
+                    </div>
+                    <p class="price">$24.61</p>
+                    <button class="add-to-cart" onclick="addToCart('Side Effect', 24.61)">Add to Cart</button>
+                </div>
+            </div>
+            <div class="product-card">
+                <img src="./image copy 4.png" alt="Molecule 01">
+                <div class="product-info">
+                    <h3>Molecule 01</h3>
+                    <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half"></i>
+                        <span>(156)</span>
+                    </div>
+                    <p class="price">$135.00</p>
+                    <button class="add-to-cart" onclick="addToCart('Molecule 01', 135.00)">Add to Cart</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Cart Modal -->
+    <div class="cart-modal" id="cartModal">
+        <div class="cart-content">
+            <h2>Your Cart</h2>
+            <div class="cart-items" id="cartItems">
+                <!-- Cart items will be dynamically added here -->
+            </div>
+            <div class="cart-total">
+                <h3>Total: <span id="cartTotal">$0.00</span></h3>
+            </div>
+            
+            <div class="checkout-section">
+                <h3>Shipping Information</h3>
+                <form id="checkoutForm" onsubmit="event.preventDefault(); checkout();">
+                    <div class="form-group">
+                        <label for="street">Street Address</label>
+                        <input type="text" id="street" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="city">City</label>
+                        <input type="text" id="city" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="state">State</label>
+                        <input type="text" id="state" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="zipCode">ZIP Code</label>
+                        <input type="text" id="zipCode" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="country">Country</label>
+                        <input type="text" id="country" required>
+                    </div>
+                    <button type="submit" class="checkout-btn">Place Order</button>
+                </form>
+            </div>
+            
+            <button class="close-cart" onclick="closeCart()">×</button>
+        </div>
+    </div>
+
+    <!-- Elegant Customer Reviews -->
+    <section class="elegant-reviews">
+        <div class="reviews-header">
+            <h2>Client Testimonials</h2>
+            <p class="subtitle">Experiences shared by our distinguished clientele</p>
+        </div>
+        <div class="elegant-reviews-container">
+            <div class="elegant-review-card">
+                <div class="review-stars">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </div>
+                <p class="review-quote">"An exquisite fragrance that captivates the senses. Baccarat Rouge 540 is truly a masterpiece of modern perfumery. The longevity and sillage are remarkable."</p>
+                <div class="reviewer-details">
+                    <span class="reviewer-name">Elizabeth Parker</span>
+                    <span class="reviewer-location">New York</span>
+                </div>
+            </div>
+            <div class="elegant-review-card">
+                <div class="review-stars">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </div>
+                <p class="review-quote">"Le Labo Santal 33 has become my signature scent. The woody notes are perfectly balanced, creating an unforgettable olfactory experience."</p>
+                <div class="reviewer-details">
+                    <span class="reviewer-name">James Wilson</span>
+                    <span class="reviewer-location">London</span>
+                </div>
+            </div>
+            <div class="elegant-review-card">
+                <div class="review-stars">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </div>
+                <p class="review-quote">"The attention to detail in curation and the exceptional service make this my preferred destination for luxury fragrances. Every purchase is a delightful experience."</p>
+                <div class="reviewer-details">
+                    <span class="reviewer-name">Sofia Martinez</span>
+                    <span class="reviewer-location">Paris</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2024 Luxury Perfumes. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
