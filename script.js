@@ -200,12 +200,14 @@ function switchToLogin() {
 }
 
 // API Configuration
-const API_URL = 'http://localhost:3000';
+const API_BASE_URL = window.location.hostname === 'localhost' 
+    ? 'http://localhost:3000' 
+    : 'https://perfume-3elz.onrender.com';
 
 // Product loading functions
 async function loadProducts() {
     try {
-        const response = await fetch(`${API_URL}/api/products`);
+        const response = await fetch(`${API_BASE_URL}/api/products`);
         const products = await response.json();
         displayProducts(products);
     } catch (error) {
@@ -216,7 +218,7 @@ async function loadProducts() {
 
 async function loadProductsByCategory(category) {
     try {
-        const response = await fetch(`${API_URL}/api/products/${category}`);
+        const response = await fetch(`${API_BASE_URL}/api/products/${category}`);
         const products = await response.json();
         displayProducts(products, category);
     } catch (error) {
@@ -274,7 +276,7 @@ async function loadCart() {
         const token = localStorage.getItem('token');
         if (!token) return;
 
-        const response = await fetch(`${API_URL}/api/cart`, {
+        const response = await fetch(`${API_BASE_URL}/api/cart`, {
             headers: {
                 'Authorization': `Bearer ${token}`
             },
@@ -309,7 +311,7 @@ async function handleLogin(event) {
     try {
         showError('loginForm', '');
         
-        const response = await fetch(`${API_URL}/api/login`, {
+        const response = await fetch(`${API_BASE_URL}/api/login`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -407,7 +409,7 @@ async function handleSignup(event) {
     try {
         console.log('Attempting signup with:', { name, email }); // Debug log
 
-        const response = await fetch(`${API_URL}/api/signup`, {
+        const response = await fetch(`${API_BASE_URL}/api/signup`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

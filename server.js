@@ -19,7 +19,7 @@ const app = express();
 
 // Enhanced Security Middleware
 app.use(cors({
-    origin: ['http://localhost:3000', 'http://127.0.0.1:3000', 'http://localhost:5500'],
+    origin: ['http://localhost:3000', 'http://127.0.0.1:3000', 'http://localhost:5500', 'https://perfume-3elz.onrender.com'],
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization', 'Accept']
@@ -362,14 +362,6 @@ const auth = async (req, res, next) => {
     }
 };
 
-// Update cookie settings for production
-const cookieOptions = {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
-    sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
-    maxAge: 24 * 60 * 60 * 1000 // 24 hours
-};
-
 // Routes
 app.post('/api/signup', async (req, res) => {
     try {
@@ -387,7 +379,12 @@ app.post('/api/signup', async (req, res) => {
         );
 
         // Set cookie
-        res.cookie('token', token, cookieOptions);
+        res.cookie('token', token, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+            maxAge: 24 * 60 * 60 * 1000 // 24 hours
+        });
 
         // Update last login
         user.lastLogin = new Date();
@@ -419,36 +416,30 @@ app.post('/api/signup', async (req, res) => {
 app.post('/api/login', async (req, res) => {
     try {
         const { email, password } = req.body;
-
-        // Find user
         const user = await User.findOne({ email });
+
         if (!user) {
             return res.status(401).json({ message: 'Invalid email or password' });
         }
 
-        // Verify password
-        const isValidPassword = await user.comparePassword(password);
+        const isValidPassword = await bcrypt.compare(password, user.password);
         if (!isValidPassword) {
             return res.status(401).json({ message: 'Invalid email or password' });
         }
 
-        // Generate token
-        const token = jwt.sign(
-            { userId: user._id },
-            JWT_SECRET,
-            { expiresIn: '24h' }
-        );
-
-        // Update last login
-        user.lastLogin = new Date();
-        await user.save();
-
-        // Set cookie
-        res.cookie('token', token, cookieOptions);
+        const token = jwt.sign({ userId: user._id }, JWT_SECRET, { expiresIn: '24h' });
+        
+        // Set cookie options based on environment
+        const isProduction = process.env.NODE_ENV === 'production';
+        res.cookie('token', token, {
+            httpOnly: true,
+            secure: isProduction,
+            sameSite: isProduction ? 'none' : 'lax',
+            maxAge: 24 * 60 * 60 * 1000 // 24 hours
+        });
 
         res.json({
-            message: 'Logged in successfully',
-            token,
+            message: 'Login successful',
             user: {
                 id: user._id,
                 name: user.name,
@@ -458,7 +449,7 @@ app.post('/api/login', async (req, res) => {
         });
     } catch (error) {
         console.error('Login error:', error);
-        res.status(500).json({ message: 'An error occurred during login' });
+        res.status(500).json({ message: 'Internal server error' });
     }
 });
 
